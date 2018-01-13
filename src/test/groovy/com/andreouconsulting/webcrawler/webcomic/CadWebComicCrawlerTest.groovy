@@ -68,5 +68,4 @@ class CadWebComicCrawlerTest extends Specification {
         assert result.length == 1
         assert result[0].equals(expectedUrl);
     }
-    
 }
