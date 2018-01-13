@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+ <head> 
+  <meta charset="utf-8"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <meta property="og:image" content="http://www.interrobangstudios.com/images/comics/4f8dc7d88e8bb.jpg"> 
+  <meta property="og:title" content="Shared Experience Points"> 
+  <meta property="og:description" content="Webcomics, comic books, art galleries and more!"> 
+  <meta property="og:type" content="article"> 
+  <meta property="og:url" content="http://www.interrobangstudios.com/comics-display.php?comic_id=5&amp;strip_id=1443"> 
+  <meta property="fb:admins" content="1575750038"> 
+  <meta property="fb:admins" content="100000467154880"> 
+  <meta property="fb:app_id" content="292677490398"> 
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"> 
+  <link rel="shortcut icon" href="http://www.interrobangstudios.com/favicon.png"> 
+  <title>Shared Experience Points</title> 
+  <!-- Bootstrap --> 
+  <link href="lib/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet"> 
+  <link href="lib/bootstrap-3.3.4/css/bootstrap-theme.min.css" rel="stylesheet"> 
+  <link href="css/site.css" rel="stylesheet"> 
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries --> 
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// --> 
+  <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+        <![endif]--> 
+ </head> 
+ <body role="document"> 
+  <div class="container" role="navigation"> 
+   <div class="well" id="interrobang-navigation"> 
+    <div class="row"> 
+     <div class="col-xs-12 col-sm-12 hidden-md col-lg-4" id="logo" style=""> 
+      <a href="http://www.interrobangstudios.com"><img src="assets/nav/interrobang_logo.png" alt="Interrobang Studios" style="top: -35px; position: relative;"></a> 
+     </div> 
+     <div class="hidden-xs hidden-sm hidden-lg col-md-3" id="logo" style=""> 
+      <a href="http://www.interrobangstudios.com"><img src="assets/nav/interrobang_logo.png" alt="Interrobang Studios" style="top: -35px; position: relative; left: -60px;"></a> 
+     </div> 
+     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-8"> 
+      <div class="row hidden-xs" style="text-align: right;"> 
+       <a href="webcomics.php"><img src="assets/nav/nav_webcomics.png" alt="Web Comics"></a>&nbsp;&nbsp; 
+       <a href="pocket-rivals.php"><img src="assets/nav/nav_games.png" alt="Games"></a>&nbsp;&nbsp; 
+       <a href="galleries.php"><img src="assets/nav/nav_galleries.png" alt="Galleries"></a>&nbsp;&nbsp; 
+       <a href="store.php"><img src="assets/nav/nav_store.png" alt="Store"></a>&nbsp;&nbsp; 
+       <a href="conventions.php"><img src="assets/nav/nav_conventions.png" alt="Conventions"></a>&nbsp; 
+      </div> 
+      <div class="row hidden-xs" style="text-align: right;"> 
+       <div class="col-sm-5" style="text-align: right;"> 
+        <a href="blog.php"><img src="assets/nav/nav_blog.png" alt="blog"></a>&nbsp;&nbsp; 
+        <a href="faq.php"><img src="assets/nav/nav_faq.png" alt="FAQ"></a>&nbsp;&nbsp; 
+        <a href="aboutus.php"><img src="assets/nav/nav_about.png" alt="About Us"></a>&nbsp;&nbsp; 
+       </div> 
+       <div class="col-sm-3" style="text-align: center;"> 
+        <div class="social-media-links"> 
+         <a href="https://www.patreon.com/interrobangstudios" style="padding: "><img src="assets/socialmedia/nav_patreon.png"></a> 
+         <a href="http://www.facebook.com/interrobangstudios"><img src="assets/socialmedia/nav_facebook.png"></a> 
+         <a href="http://www.twitter.com/interrogang"><img src="assets/socialmedia/nav_twitter.png"></a> 
+         <a href="http://www.interrobangstudios.tumblr.com"><img src="assets/socialmedia/nav_tumblr.png"></a> 
+         <a href="http://www.interrobangstudios.com/rss.php"><img src="assets/socialmedia/nav_rss.png"></a> 
+        </div> 
+       </div> 
+       <div class="col-sm-4" style="text-align: right;">
+        <form id="nav-search" action="http://www.interrobangstudios.com/search.php" method="GET">
+         <img src="assets/nav/nav_search.png" alt="Search">
+         <input style="width:100px;" type="text" name="criteria" class="navinput"> 
+         <input type="submit" value="Go" class="btn btn-default btn-xs">
+        </form>
+       </div> 
+      </div> 
+     </div> 
+     <div class="row hidden-sm hidden-md hidden-lg"> 
+      <div class="col-xs-6 navimage" style="text-align: center;">
+       <a href="webcomics.php"><img src="assets/nav/nav_webcomics.png" alt="Web Comics"></a>
+      </div> 
+      <div class="col-xs-6 navimage" style="text-align: center;">
+       <a href="pocket-rivals.php"><img src="assets/nav/nav_games.png" alt="Games"></a>
+      </div> 
+      <div class="col-xs-6 navimage" style="text-align: center;">
+       <a href="galleries.php"><img src="assets/nav/nav_galleries.png" alt="Galleries"></a>
+      </div> 
+      <div class="col-xs-6 navimage" style="text-align: center;">
+       <a href="store.php"><img src="assets/nav/nav_store.png" alt="Store"></a>
+      </div> 
+      <div class="col-xs-6 navimage" style="text-align: center;">
+       <a href="conventions.php"><img src="assets/nav/nav_conventions.png" alt="Conventions"></a>
+      </div> 
+      <div class="col-xs-6 navimage" style="text-align: center;"> 
+       <a href="blog.php"><img src="assets/nav/nav_blog.png" alt="blog"></a>&nbsp;&nbsp; 
+       <a href="faq.php"><img src="assets/nav/nav_faq.png" alt="FAQ"></a>&nbsp;&nbsp; 
+       <a href="aboutus.php"><img src="assets/nav/nav_about.png" alt="FAQ"></a>&nbsp; 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </div>  
+  <div class="container" role="main"> 
+   <div class="row" style="margin-bottom: 10px;"> 
+    <div class="col-xs-8 col-sm-11" style="padding-right: 0px;"> 
+     <a href="http://www.interrobangstudios.com/comics-display.php?comic_id=5"><img src="assets/5/banner.jpg" width="100%"></a> 
+    </div> 
+    <div class="col-xs-2 hidden-sm hidden-md hidden-lg" style="padding-right: 7px; padding-left: 8px;"> 
+     <img src="assets/badges/rated_m.png" width="100%"> 
+    </div> 
+    <div class="col-xs-2 hidden-sm hidden-md hidden-lg" style="padding-left: 0px;"> 
+     <img src="assets/badges/e.png" width="100%"> 
+    </div> 
+    <div class="hidden-xs col-sm-1" style="padding-left: 5px;"> 
+     <img src="assets/badges/rated_m.png" width="100%">
+     <br> 
+     <img src="assets/badges/e.png" width="100%" style="margin-top: 10px;"> 
+    </div> 
+   </div> 
+   <div class="row"> 
+    <div class="col-xs-12 col-sm-8 col-md-9"> 
+     <div class="well"> 
+      <div class="row"> 
+       <div class="col-xs-6 col-sm-4 comic-leftnav"> 
+        <a href="comics-display.php?strip_id=60"><img src="assets/nav/nav_first.png" height="38px"></a>
+        <a href="comics-display.php?strip_id=1441"><img src="assets/nav/nav_prev.png" height="38px"></a> 
+       </div> 
+       <div class="hidden-xs col-sm-4 comic-title">
+         Shared Experience Points 
+       </div> 
+       <div class="col-xs-6 col-sm-4 comic-rightnav"> 
+        <img src="assets/nav/nav_next_g.png" height="38px">
+        <img src="assets/nav/nav_latest_g.png" height="38px"> 
+       </div> 
+       <div class="col-xs-12 hidden-sm hidden-md hidden-lg comic-title">
+         Shared Experience Points 
+       </div> 
+      </div> 
+      <div class="row"> 
+       <div class="col-xs-12 comic-content"> 
+        <img src="/images/comics/4f8dc7d88e8bb.jpg" width="100%"> 
+       </div> 
+      </div> 
+      <div class="row"> 
+       <div class="col-xs-12 comic-content"> 
+        <div style="margin-bottom: 0px; margin-top:10px;"> 
+         <!--TUMBLR--> 
+         <a href="http://www.tumblr.com/share/photo?source=http%3A%2F%2Fwww.interrobangstudios.com%2Fimages%2Fcomics%2F4f8dc7d88e8bb.jpg&amp;caption=Trigger+Star - Shared Experience Points&amp;clickthru=http%3A%2F%2Fwww.interrobangstudios.com%2Fcomics-display.php%3Fstrip_id%3D1443" title="Share on Tumblr" style="display:inline-block; text-indent:-9999px; overflow:hidden; width:61px; height:20px;  background:url('http://platform.tumblr.com/v1/share_2.png') top left no-repeat transparent;"></a> 
+         <!--PINTEREST-->
+         <a href="//www.pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.interrobangstudios.com%2Fcomics-display.php%3Fstrip_id%3D1443&amp;media=http%3A%2F%2Fwww.interrobangstudios.com%2Fimages%2Fcomics%2F4f8dc7d88e8bb.jpg&amp;description=Trigger Star - Shared Experience Points" data-pin-do="buttonBookmark"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" style="padding-bottom: 10px"></a> 
+         <!--TWITTER--> 
+         <a href="https://twitter.com/share" class="twitter-share-button" data-text="Shared Experience Points" data-via="interrogang" data-count="none">Tweet</a> 
+         <!--FACEBOOK--> 
+         <div class="fb-like" data-href="http://www.interrobangstudios.com/comics-display.php?strip_id=1443" data-colorscheme="light" data-layout="button_count" data-action="like" data-show-faces="true" data-send="false" style="top: -5px"></div> 
+         <!-- GOOGLE+1-->
+         <div class="g-plusone" data-annotation="inline" data-width="300" style="text-indent: 0px; margin: 0px; padding: 0px; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 32px; height: 20px; background: transparent;"></div> 
+        </div> 
+        <!-- Scripts ---> 
+        <script src="http://platform.tumblr.com/v1/share.js"></script> 
+        <script type="text/javascript">
+                (function() {
+                    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                    po.src = 'https://apis.google.com/js/plusone.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                })();
+            </script> 
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script> 
+       </div> 
+      </div> 
+      <div class="row"> 
+       <div class="col-xs-6 col-sm-4 comic-leftnav"> 
+        <a href="comics-display.php?strip_id=60"><img src="assets/nav/nav_first.png" height="38px"></a>
+        <a href="comics-display.php?strip_id=1441"><img src="assets/nav/nav_prev.png" height="38px"></a> 
+       </div> 
+       <div class="hidden-xs col-sm-4 comic-title">
+         Shared Experience Points 
+       </div> 
+       <div class="col-xs-6 col-sm-4 comic-rightnav"> 
+        <img src="assets/nav/nav_next_g.png" height="38px">
+        <img src="assets/nav/nav_latest_g.png" height="38px"> 
+       </div> 
+      </div> 
+      <div class="row"> 
+       <div class="col-xs-12 comic-description"> 
+       </div> 
+      </div> 
+      <div class="row"> 
+       <div class="col-xs-12"> 
+        <div class="widget-archive"> 
+         <form action="http://www.interrobangstudios.com/comics-display.php" method="GET"> 
+          <a href="http://www.interrobangstudios.com/archive.php?comic_id=5"><img class="archivebutton" src="assets/archivebutton.png"></a> 
+          <select name="strip_id"><option value="1443" selected>2012-04-17 Shared Experience Points </option><option value="1441">2012-04-06 Works every time? </option><option value="1440">2012-04-03 That Tingling Sensation </option><option value="1438">2012-03-29 Enhanced Effort </option><option value="1436">2012-03-26 Working? </option><option value="1435">2012-03-19 Feel the magics </option><option value="1434">2012-03-13 The Peacemaker </option><option value="1432">2012-03-08 Prove it </option><option value="1430">2012-03-06 True Prowess </option><option value="1429">2012-03-01 Spell Schools </option><option value="1427">2012-02-24 Trigger Star Art Card #8: Bacon Powder </option><option value="1426">2012-02-17 Trigger Star Art Card #7: Quiche </option><option value="1425">2012-02-10 A Matter of Survival </option><option value="1424">2012-02-07 Personality Repair </option><option value="1418">2012-01-31 Trigger Star Art Card #6: Black Licorice </option><option value="1417">2012-01-27 Trigger Star Art Card #5: Saurkraut </option><option value="1413">2012-01-24 Woe and Despair </option><option value="1410">2012-01-20 A Cry for Help </option><option value="1407">2012-01-17 Knockin' on the Sub-Plot </option><option value="1404">2012-01-12 Deep cuts </option><option value="1397">2011-12-06 Reprimandatory </option><option value="1394">2011-12-02 The Note </option><option value="1392">2011-11-23 Trigger Star Art Card #4: Snacktray </option><option value="1390">2011-11-18 Trigger Star Art Card #3: Hash </option><option value="1388">2011-11-15 Bad Morning </option><option value="1385">2011-11-10 Revelation </option><option value="1377">2011-10-28 To the rescue </option><option value="1374">2011-10-25 You Got Snookered </option><option value="1370">2011-10-21 Powers Bestowed </option><option value="1366">2011-10-18 As a rewawd... </option><option value="1360">2011-10-11 Ethics Debate </option><option value="1356">2011-10-07 Live and Let Live </option><option value="1355">2011-10-04 Random Encounter </option><option value="1348">2011-09-26 We do love you guys, really. </option><option value="1342">2011-09-15 Trigger Star Art Card #2: Breadbun </option><option value="1337">2011-09-13 Trigger Star Art Card #1: Avacado &amp; Fresca </option><option value="1335">2011-09-09 A Good Cleaning </option><option value="1332">2011-09-06 A Woman's Touch </option><option value="1329">2011-09-02 Souvenirs </option><option value="1325">2011-08-30 Ain't Seen Nothin' </option><option value="1321">2011-08-26 Storm's a-brewin'... </option><option value="1317">2011-08-23 Day-Knew-Mawn 4 Egg Foo Yung </option><option value="1314">2011-08-12 Good Gone Sword </option><option value="1308">2011-08-09 Back to the Bulge </option><option value="1305">2011-08-05 One More Epilogue </option><option value="1301">2011-08-02 Fond Farewell </option><option value="1297">2011-07-29 Old War Buddies </option><option value="1296">2011-07-26 Blazes of Glory </option><option value="1291">2011-07-22 The Path of Saurkraut </option><option value="1286">2011-07-19 The Wrong Button </option><option value="1282">2011-07-15 Unsatisfied </option><option value="1279">2011-07-12 Tastes Like Treachery </option><option value="1276">2011-07-08 Mmm...Curry </option><option value="1271">2011-07-05 Now, where were we...? </option><option value="1262">2011-05-06 Done and done </option><option value="1258">2011-05-03 HYPER COMBO FINISH! </option><option value="1254">2011-04-22 We interupt this story arc for...FRESCA PLUSHIE!! </option><option value="1250">2011-04-19 Moves of Legends </option><option value="1249">2011-04-14 A Partner for the Dance </option><option value="1245">2011-04-08 Clean Up in Panel Four </option><option value="1242">2011-04-05 Holdin' out for a hero </option><option value="1239">2011-04-01 Not Dead </option><option value="1235">2011-03-29 Saurkraut's Valor </option><option value="1232">2011-03-25 Holding Their Ground </option><option value="1229">2011-03-22 Loyal, Brave, and True </option><option value="1226">2011-03-18 The Back-Up Plan </option><option value="1224">2011-03-15 Humility or Death </option><option value="1219">2011-03-11 The Plan </option><option value="1214">2011-03-08 Look out!! </option><option value="1209">2011-03-04 The Gods Be Angry </option><option value="1206">2011-03-01 I'm A Nymph Watcher </option><option value="1202">2011-02-25 Avacado by Maximo Lorenzo </option><option value="1195">2011-02-14 Yay! VD! (better late than never) </option><option value="1191">2011-02-11 Mmmm...Tasty </option><option value="1188">2011-02-08 Presenting...! </option><option value="1181">2011-02-04 What's in a name? </option><option value="1173">2011-02-01 The Ultimate Tragedy </option><option value="1172">2011-01-28 Awwwwkwaaard... </option><option value="1169">2011-01-25 It All Makes Sense </option><option value="1166">2011-01-21 A Pair Too Far </option><option value="1162">2011-01-18 Oh, Quiche... </option><option value="1159">2011-01-14 Time for (re)Introductions </option><option value="1155">2011-01-11 Healing </option><option value="1144">2010-12-03 Leave it </option><option value="1140">2010-11-30 Bad Break Up </option><option value="1135">2010-11-19 Encounter Fail </option><option value="1129">2010-11-09 Breadbun's Rant </option><option value="1124">2010-11-05 What a drag... </option><option value="1122">2010-11-02 Guilt? What's that? </option><option value="1116">2010-10-26 Minion Weapons and Fighting Styles </option><option value="1115">2010-10-22 Trigger Star #200 </option><option value="1111">2010-10-19 Choices Unmade </option><option value="1107">2010-10-15 Perhaps More than a Tinge </option><option value="1105">2010-10-12 Tinge of Regret </option><option value="1101">2010-10-05 What you get </option><option value="1095">2010-09-28 Freedom of Choice </option><option value="1091">2010-09-24 No Such Thing as Mysterious </option><option value="1088">2010-09-21 Covering his Bases </option><option value="1082">2010-09-17 Behind Door Number One..! </option><option value="1080">2010-09-14 One More Time Again </option><option value="1077">2010-09-10 A moment... </option><option value="1075">2010-09-07 Her Fragile Mind </option><option value="1071">2010-08-31 A Trying Trial Indeed </option><option value="1061">2010-08-13 And so they find... </option><option value="1057">2010-08-10 Prophecies n' Stuff </option><option value="1053">2010-08-06 Temple of Trials? </option><option value="1051">2010-08-03 Exposition Expo! </option><option value="1045">2010-07-27 Vengeful Interlude </option><option value="1040">2010-07-23 Figments. Boob Figments. </option><option value="1030">2010-07-13 The Penalty for Failure </option><option value="1026">2010-07-09 Faboobalous Secret Powers! </option><option value="1023">2010-07-06 Oh, he's mad now... </option><option value="1017">2010-07-02 Confirmation </option><option value="1010">2010-06-25 He who shall not be named... </option><option value="1007">2010-06-22 That's the Power of Zot... </option><option value="1002">2010-06-18 When they meet Black Licorice... </option><option value="997">2010-06-15 Mere Banditry </option><option value="927">2010-06-08 ATTACK!! </option><option value="925">2010-06-04 BL Bares All </option><option value="922">2010-06-01 Stan Takes a Stand </option><option value="920">2010-05-28 Deals! Deals! Deals! </option><option value="917">2010-05-25 Every Girl's Crazy for a... </option><option value="912">2010-05-18 Back to the sub-plot! </option><option value="911">2010-05-14 Guest Art by Jade Liebes! </option><option value="907">2010-05-11 Wistful Villainy </option><option value="903">2010-05-07 Epilogue </option><option value="900">2010-05-04 Spoils of Battle </option><option value="896">2010-04-30 Stoic to the End </option><option value="890">2010-04-20 Her Noble Sacrifice </option><option value="885">2010-04-16 If it worked on the village cat... </option><option value="883">2010-04-13 Brainstorming </option><option value="878">2010-04-05 Sage-like advice </option><option value="873">2010-04-02 Horrors </option><option value="871">2010-03-30 The Call of Butt </option><option value="867">2010-03-26 Legend of the Horn </option><option value="865">2010-03-23 Eric's Dread Gazebo </option><option value="858">2010-03-19 Tribute </option><option value="855">2010-03-16 Plundered </option><option value="853">2010-03-12 Booty Call </option><option value="849">2010-03-09 Hail the Conquering Heroes! </option><option value="844">2010-03-05 Somethin' A Little Steamy... </option><option value="841">2010-03-02 Garden-ready weaponry </option><option value="838">2010-02-26 Motto Motto Radical Fight! </option><option value="839">2010-02-26 Motto Motto Radical Fight! </option><option value="834">2010-02-23 A Gay Tea Party </option><option value="832">2010-02-19 Deadbeat Critters </option><option value="828">2010-02-16 A Word from Our Sponsor </option><option value="827">2010-02-12 And now, more than you need to know... </option><option value="822">2010-02-09 Fashion Sense </option><option value="820">2010-02-05 Little Black Book--Secret Scroll Edition </option><option value="816">2010-02-02 The minute after </option><option value="811">2010-01-29 Supply and Demand </option><option value="809">2010-01-26 Hungry Eyes </option><option value="806">2010-01-22 Hip Hip Hooray for the Apple Crone! </option><option value="800">2010-01-19 Boobs in Slow Motion </option><option value="798">2010-01-15 Twisted Criminal Mind </option><option value="794">2010-01-12 Where the Party's At... </option><option value="791">2010-01-08 No Down Payments! </option><option value="786">2010-01-05 Snacktray Fills out (featuring Jade Liebes) </option><option value="782">2009-12-29 And now things get just plain bizarre... </option><option value="778">2009-12-22 Trade Disputes </option><option value="775">2009-12-18 Romantic Interlude Deux </option><option value="771">2009-12-15 The Unprofessionals </option><option value="767">2009-12-11 Gotta watch 'em </option><option value="764">2009-12-08 Leadership Benefits </option><option value="762">2009-12-04 Ain't No Scab! </option><option value="759">2009-12-01 Useless Euphimisms </option><option value="757">2009-11-27 Busted </option><option value="753">2009-11-24 Late Night Commotion </option><option value="752">2009-11-20 Mastering the Ways... </option><option value="747">2009-11-17 Getting a strange sense of Deja Vu... </option><option value="745">2009-11-13 A Hero's Farewell </option><option value="738">2009-11-06 Fearsome Foes </option><option value="736">2009-11-03 And now it's off </option><option value="731">2009-10-23 It's ON like Donkey Kong! </option><option value="728">2009-10-20 To the Rescue! </option><option value="726">2009-10-16 Turmoil! Tumult! Bedlam! </option><option value="724">2009-10-13 Stuff of Legends </option><option value="718">2009-10-09 Respect among Champions </option><option value="715">2009-10-02 Dread Beer Goggles </option><option value="708">2009-09-29 Epic Battle Poetry </option><option value="706">2009-09-25 Where were we...? </option><option value="704">2009-09-22 Back at the Ranch... </option><option value="699">2009-09-18 Drunken Revenge </option><option value="698">2009-09-15 Diabeetus </option><option value="691">2009-09-11 Noir </option><option value="687">2009-09-07 Happy Labor Day!! </option><option value="684">2009-09-03 Workin' for a Livin' </option><option value="682">2009-09-01 Skilled Labor </option><option value="677">2009-08-28 Grievances </option><option value="675">2009-08-25 Romantic Interlude </option><option value="671">2009-08-21 One Long Poop Joke </option><option value="669">2009-08-18 "But Enough Talk. Have At You!" </option><option value="662">2009-08-10 Ye Olde Demon Killer </option><option value="658">2009-08-07 Best left unseen </option><option value="656">2009-08-03 A Fistful of Butt Dollars </option><option value="655">2009-07-31 100th Strip. HOLY CRAP!!! </option><option value="647">2009-07-28 Desperate Measures </option><option value="645">2009-07-24 Bathroom of Horrors </option><option value="641">2009-07-20 Grease is the Word </option><option value="637">2009-07-14 Side Saga </option><option value="633">2009-07-10 Obtuse Warning Signs </option><option value="631">2009-07-07 Meanwhiles... </option><option value="626">2009-07-03 VOMIT! </option><option value="623">2009-06-30 Sharp Pointy Teeth </option><option value="620">2009-06-26 Just one more vag joke... </option><option value="610">2009-06-15 The Checklist </option><option value="607">2009-06-12 Retribution </option><option value="602">2009-06-09 There will be blood </option><option value="599">2009-06-05 The Error of Gloating </option><option value="597">2009-06-02 One more for the road </option><option value="593">2009-05-28 Wom Power </option><option value="589">2009-05-26 More Worser, Was It? </option><option value="587">2009-05-22 Hold Me, Spell Me, Fizz Me, Fell Me </option><option value="585">2009-05-19 Faster Bumblebee Kill Kill! </option><option value="525">2009-05-15 O Captain! My Captain! </option><option value="520">2009-05-08 Remembrances &amp; Excuses </option><option value="511">2009-04-24 Mind Games </option><option value="507">2009-04-17 Kitties </option><option value="503">2009-04-10 Judgement Day </option><option value="499">2009-04-03 Deviants </option><option value="495">2009-03-27 Freaks is Freaks </option><option value="493">2009-03-20 Training Day </option><option value="491">2009-03-13 Evil Forces Converge </option><option value="487">2009-03-06 Desire </option><option value="482">2009-02-27 Kinky Payback </option><option value="478">2009-01-30 Comical Romantic Situation </option><option value="474">2009-01-23 Memories? </option><option value="470">2009-01-16 Subtle Appeal </option><option value="467">2009-01-09 Meetings of the Awkward Variety </option><option value="465">2009-01-02 You just have to listen... </option><option value="460">2008-12-19 Voices... </option><option value="454">2008-12-12 Sneakings and Peekings! </option><option value="451">2008-12-05 Precocious </option><option value="447">2008-11-28 A Zapping Good Time </option><option value="444">2008-11-21 Romantic Interlude... </option><option value="448">2008-11-14 Inexcusable </option><option value="438">2008-11-07 Mysteries, Mysteries... </option><option value="432">2008-10-24 Pre-Concieved Notions </option><option value="429">2008-10-17 Parallels </option><option value="426">2008-10-10 No means No </option><option value="423">2008-10-03 Mmm...Tensiony Redux </option><option value="355">2007-02-23 Recon Booty </option><option value="381">2007-02-16 "Destiny Beckons, Hero!" </option><option value="346">2007-02-09 Boobavore! </option><option value="341">2007-01-19 A Hole Device </option><option value="400">2007-01-12 More Pursuit Than Study Lately </option><option value="310">2006-12-08 Startling Revelations </option><option value="382">2006-11-17 Just Like Summer Camp </option><option value="285">2006-10-20 Operation Launch </option><option value="279">2006-10-13 Bad Guys Hate Unionized Labor </option><option value="274">2006-10-06 Dastardly Plots and Pay </option><option value="383">2006-09-22 Obligations? </option><option value="257">2006-09-08 Group-O-Dynamics </option><option value="249">2006-08-25 Sensitivity Training </option><option value="384">2006-08-18 What a Woman! </option><option value="385">2006-08-11 snacktraykiss.com </option><option value="233">2006-08-04 "Breadbun and Saurkraut" </option><option value="223">2006-07-21 Intellectual Barrier </option><option value="218">2006-07-14 A Momentary Interlude </option><option value="213">2006-07-07 A Recipe for Evil </option><option value="208">2006-06-30 Blinded by the Cute </option><option value="203">2006-06-23 Reign of the Shadow Dragons...Hoo Ha! </option><option value="198">2006-06-16 Crappy Mascots </option><option value="193">2006-06-09 The Mysteries of Magic Explained </option><option value="402">2006-06-02 Personal Affirmations </option><option value="176">2006-05-26 First Impressions </option><option value="171">2006-05-19 The Quest! </option><option value="166">2006-05-12 Not Exactly Plushie Material </option><option value="401">2006-05-05 "At Long Last, the Supporting Cast!" </option><option value="155">2006-04-28 Budget Concerns </option><option value="386">2006-04-21 "Mighty Pricey!" </option><option value="153">2006-04-14 Beefy!! </option><option value="399">2006-03-31 "They're All So Pretty!" </option><option value="137">2006-03-24 A Declaration and a Conundrum </option><option value="132">2006-03-17 "Red Flag" </option><option value="126">2006-03-10 "Double Standard, Anyone?" </option><option value="119">2006-03-03 "Your Weekly Dose of Misogyny!" </option><option value="398">2006-02-17 "Holy Crap! New Backgrounds!!" </option><option value="103">2006-02-10 Meanwhile, back at the plot hole... </option><option value="387">2006-02-03 Anguish and Revenge </option><option value="90">2006-01-27 Lament of the Smut </option><option value="388">2006-01-20 Bloody Revenge? </option><option value="79">2006-01-13 That's Not True! That's Impossible!! </option><option value="74">2006-01-06 Plot Hole </option><option value="389">2005-12-09 Worker's Rights, Bitch! </option><option value="70">2005-12-02 A Very Refreshing Gesture Indeed </option><option value="69">2005-11-18 One Side for Black Licorice! </option><option value="68">2005-11-11 Not Allegory </option><option value="66">2005-10-28 Farewell, Old Fart </option><option value="63">2005-10-21 Rape, Kill, Pillage, and Burn! </option><option value="65">2005-10-14 Hopefully the Only D&amp;D Gag (Yeah, right!) </option><option value="64">2005-10-07 It's EXTREME! </option><option value="62">2005-09-30 Burnin' Burnin' Burnin' </option><option value="61">2005-09-23 The Saga Begins...to go to the Crapper. </option><option value="60">2005-09-16 It's Gotta Start Somewhere... </option></select> 
+          <input type="submit" value="Go!"> 
+         </form> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="widget-disqus" id="disqus_thread"></div> 
+      <script type="text/javascript">
+            var disqus_shortname = 'interrobangstudios';
+            var disqus_identifier = '1443';
+            var disqus_title = 'Trigger Star - Shared Experience Points';
+            var disqus_url = 'http://interrobangstudios.com/comics-display.php?strip_id=1443';
+
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script> 
+      <noscript>
+       Please enable JavaScript to view the 
+       <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+      </noscript> 
+      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a> 
+     </div> 
+    </div> 
+    <div class="col-xs-12 col-sm-4 col-md-3"> 
+     <div class="well"> 
+      <div align="center" id="bsap_1288637" class="bsarocks bsap_634b8233147286f10433e3277ba01b1c" style="margin:auto;"></div> 
+      <br> 
+      <div align="center" id="bsap_1288643" class="bsarocks bsap_634b8233147286f10433e3277ba01b1c" style="margin:auto;"></div> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="well"> 
+    <div class="footer"> 
+     <div>
+      Site contents, characters, and all related material ™ and © Interrobang Studios.
+     </div> 
+     <div> 
+      <a href="blog.php">Blog</a> - 
+      <a href="faq.php">F.A.Q.</a> - 
+      <a href="aboutus.php">About Us</a> - 
+      <a href="advertise.php">Advertise with us!</a> 
+     </div> 
+     <div class="social-media-links"> 
+      <a href="https://www.patreon.com/interrobangstudios" style="padding: "><img src="assets/socialmedia/nav_patreon.png"></a> 
+      <a href="http://www.facebook.com/interrobangstudios"><img src="assets/socialmedia/nav_facebook.png"></a> 
+      <a href="http://www.twitter.com/interrogang"><img src="assets/socialmedia/nav_twitter.png"></a> 
+      <a href="http://www.interrobangstudios.tumblr.com"><img src="assets/socialmedia/nav_tumblr.png"></a> 
+      <a href="http://www.interrobangstudios.com/rss.php"><img src="assets/socialmedia/nav_rss.png"></a> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+  <script src="lib/jquery/jquery-2.1.3.min.js"></script> 
+  <script src="lib/bootstrap-3.3.4/js/bootstrap.min.js"></script> 
+  <!-- Google Analytics --> 
+  <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-38610718-1']);
+        _gaq.push(['_setDomainName', 'interrobangstudios.com']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script> 
+  <!-- BuySellAds Ad Code --> 
+  <script type="text/javascript">
+        (function(){
+            var bsa = document.createElement('script');
+            bsa.type = 'text/javascript';
+            bsa.async = true;
+            bsa.src = 'http://s3.buysellads.com/ac/bsa.js';
+            (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(bsa);
+        })();
+    </script> 
+  <!-- End BuySellAds Ad Code --> 
+  <!--FACEBOOK LIKE BUTTON CODE--> 
+  <div id="fb-root"></div> 
+  <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=175123559342866";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>   
+ </body>
+</html>
