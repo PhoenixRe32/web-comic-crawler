@@ -5,7 +5,6 @@ import org.apache.commons.io.FileUtils
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import spock.lang.Specification
-import spock.lang.Unroll
 
 class CadWebComicCrawlerTest extends Specification {
     private CadWebComicCrawler webComicCrawler
@@ -18,28 +17,6 @@ class CadWebComicCrawlerTest extends Specification {
 
     def cleanup() {
         FileUtils.deleteDirectory(new File(comicTitle))
-    }
-
-    def 'should create directory when constructor gets called'() {
-        when:
-        webComicCrawler.toString()
-
-        then:
-        assert (new File(comicTitle)).exists()
-        assert (new File(comicTitle)).isDirectory()
-    }
-
-    @SuppressWarnings("GroovyUnusedAssignment")
-    def 'should throw exception when the constructor is called with an invalid URL'() {
-        given:
-        def startUrl = "start.url"
-        def comicTitle = "Test Comic"
-
-        when:
-        new CadWebComicCrawler(startUrl, comicTitle)
-
-        then:
-        MalformedURLException e = thrown()
     }
 
     @SuppressWarnings("GroovyUnusedAssignment")
@@ -94,43 +71,36 @@ class CadWebComicCrawlerTest extends Specification {
         assert result.length == 0
     }
 
-    @Unroll
     def 'should save images from valid urls and return correct number of images saved'() {
         given:
+        def filename = "cert.png"
         def imageUrl = Thread.currentThread().getContextClassLoader().getResource(filename).toURI().toURL()
 
         when:
-        def result = webComicCrawler.downloadImages([imageUrl].toArray(new URL[0]))
+        def numberOfSuccessfulSaves = webComicCrawler.downloadImages([imageUrl].toArray(new URL[0]))
 
         then:
-        assert result == expectedSuccesses
-        assert (new File(comicTitle + File.separator + filename)).exists() == expectedExistensee
-
-        where:
-        filename   | expectedSuccesses | expectedExistensee
-        "cert.png" | 1                 | true
+        assert numberOfSuccessfulSaves == 1
+        assert (new File(comicTitle + File.separator + filename)).exists()
     }
 
-    @Unroll
     def 'should return correct number of images saved (will force failure, expect 0)'() {
         given:
-        def imageUrl = Thread.currentThread().getContextClassLoader().getResource("cert.png").toURI()
-        def srcFile = new File(imageUrl)
-        def destFile = new File(imageUrl.getPath() + ".copy")
+        def filename = "cert.png"
+        def srcUrl = Thread.currentThread().getContextClassLoader().getResource(filename).toURI()
+
+        def srcFile = new File(srcUrl)
+        def destFile = new File(srcUrl.getPath() + ".copy")
+
         FileUtils.copyFile(srcFile, destFile)
-        def copyImageUrl = Thread.currentThread().getContextClassLoader().getResource(filename).toURI().toURL()
-//        FileUtils.deleteQuietly()
+        def destUrl = Thread.currentThread().getContextClassLoader().getResource(filename + ".copy").toURI().toURL()
         FileUtils.forceDelete(destFile)
 
         when:
-        def result = webComicCrawler.downloadImages([copyImageUrl].toArray(new URL[0]))
+        def numberOfSuccessfulSaves = webComicCrawler.downloadImages([destUrl].toArray(new URL[0]))
 
         then:
-        assert result == expectedSuccesses
-        assert (new File(comicTitle + File.separator + "cert.png")).exists() == expectedExistensee
-
-        where:
-        filename        | expectedSuccesses | expectedExistensee
-        "cert.png.copy" | 0                 | false
+        assert numberOfSuccessfulSaves == 0
+        assert !(new File(comicTitle + File.separator + "cert.png")).exists()
     }
 }
