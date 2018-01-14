@@ -43,8 +43,12 @@ abstract public class BaseWebComicCrawler {
         Document document = Jsoup.connect(url).get();
         logger.debug(String.format("Retrieved %s successfully", url));
 
-        history.add(document.title());
+        history.add(getTitle(document));
         return document;
+    }
+
+    public String getTitle(Document document) {
+        return removeSpecialCharacters(document.title());
     }
 
     public static URL createUrl(String url) {
@@ -56,18 +60,18 @@ abstract public class BaseWebComicCrawler {
         }
     }
 
-    final public int downloadImages(final URL[] imageUrls) {
+    final public int downloadImages(final URL[] imageUrls, final String chapterTitle) {
         logger.info(String.format("Downloading images: \n%s",
                 String.join("\n", Arrays.stream(imageUrls).map(URL::toString).collect(Collectors.toList()))));
         int numberOfSuccesses = 0;
         for (URL imageUrl : imageUrls) {
-            numberOfSuccesses = hasSavedImageToFile(imageUrl) ? numberOfSuccesses + 1 : numberOfSuccesses;
+            numberOfSuccesses = hasSavedImageToFile(imageUrl, chapterTitle) ? numberOfSuccesses + 1 : numberOfSuccesses;
         }
         return numberOfSuccesses;
     }
 
-    public boolean hasSavedImageToFile(final URL imageUrl) {
-        File image = new File(buildImageFilePath(imageUrl));
+    public boolean hasSavedImageToFile(final URL imageUrl, final String chapterTitle) {
+        File image = new File(buildImageFilePath(imageUrl, chapterTitle));
 
         logger.debug(String.format("Trying to download [%s]", image));
         try {
@@ -85,20 +89,21 @@ abstract public class BaseWebComicCrawler {
         return true;
     }
 
-    public String buildImageFilePath(final URL imageUrl) {
+    private String buildImageFilePath(final URL imageUrl, final String chapterTitle) {
         String imageUrlString = imageUrl.toString();
         int lastSlash = imageUrlString.lastIndexOf('/');
 
-        String fileName = buildFileName(imageUrlString.substring(lastSlash + 1));
+        String fileName = buildFileName(imageUrlString.substring(lastSlash + 1), chapterTitle);
 
         return saveLocation + File.separator + fileName;
     }
 
-    public String buildFileName(String name) {
-        return removeSpecialCharacters(name);
+    private String buildFileName(final String imageName, final String chapterTitle) {
+        String combinedName = String.format("%04d", history.size()) + " " + chapterTitle + " - " + imageName;
+        return removeSpecialCharacters(combinedName);
     }
 
-    private static String removeSpecialCharacters(String name) {
+    public static String removeSpecialCharacters(final String name) {
         return name.replace("?", "")
                 .replace("<", "")
                 .replace(">", "")

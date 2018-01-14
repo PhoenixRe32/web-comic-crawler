@@ -69,11 +69,11 @@ class BaseWebComicCrawlerTest extends Specification {
         def imageUrl = Thread.currentThread().getContextClassLoader().getResource(fileName).toURI().toURL()
 
         when:
-        def result = webComicCrawler.hasSavedImageToFile(imageUrl)
+        def result = webComicCrawler.hasSavedImageToFile(imageUrl, "suffix")
 
         then:
         assert result
-        assert (new File(comicTitle + File.separator + fileName)).exists()
+        assert (new File(comicTitle + File.separator + "cert-suffix.png")).exists()
     }
 
     def 'should not save image and return false'() {
@@ -90,7 +90,7 @@ class BaseWebComicCrawlerTest extends Specification {
         FileUtils.forceDelete(destFile)
 
         when:
-        def result = webComicCrawler.hasSavedImageToFile(destUrl)
+        def result = webComicCrawler.hasSavedImageToFile(destUrl, "")
 
         then:
         assert !result
@@ -104,11 +104,11 @@ class BaseWebComicCrawlerTest extends Specification {
         def imageUrl = Thread.currentThread().getContextClassLoader().getResource(filename).toURI().toURL()
 
         when:
-        def numberOfSuccessfulSaves = webComicCrawler.downloadImages([imageUrl].toArray(new URL[0]))
+        def numberOfSuccessfulSaves = webComicCrawler.downloadImages([imageUrl].toArray(new URL[0]), "suffix-2")
 
         then:
         assert numberOfSuccessfulSaves == 1
-        assert (new File(comicTitle + File.separator + filename)).exists()
+        assert (new File(comicTitle + File.separator + "cert-suffix-2.png")).exists()
     }
 
     def 'should return correct number of images saved (will force failure, expect 0)'() {
@@ -125,7 +125,7 @@ class BaseWebComicCrawlerTest extends Specification {
         FileUtils.forceDelete(destFile)
 
         when:
-        def numberOfSuccessfulSaves = webComicCrawler.downloadImages([destUrl].toArray(new URL[0]))
+        def numberOfSuccessfulSaves = webComicCrawler.downloadImages([destUrl].toArray(new URL[0]), "")
 
         then:
         assert numberOfSuccessfulSaves == 0

@@ -30,7 +30,6 @@ public class CadWebComicCrawler extends BaseWebComicCrawler {
 
     @Override
     public void crawl() {
-        // get page
         String nextLink = startUrl;
         int imagesFound = 0;
         int imagesDownloaded = 0;
@@ -43,7 +42,7 @@ public class CadWebComicCrawler extends BaseWebComicCrawler {
                 URL[] imagesUrls = scrapeImageUrls(currentPage);
                 imagesFound += imagesUrls.length;
 
-                imagesDownloaded += downloadImages(imagesUrls);
+                imagesDownloaded += downloadImages(imagesUrls, getTitle(currentPage));
 
                 nextLink = findNextLink(currentPage);
             }
@@ -62,6 +61,42 @@ public class CadWebComicCrawler extends BaseWebComicCrawler {
                 "Finished operation. Exiting...";
         String summary = String.format(summaryStructure, history.size(), imagesFound, imagesDownloaded);
         System.out.println(header + summary + footer);
+    }
+
+    @Override
+    public String getTitle(Document currentPage) {
+        return removeSpecialCharacters(
+                currentPage.title()
+                        .substring(0, currentPage.title().lastIndexOf('|'))
+                        .trim());
+    }
+
+    @Override
+    final public URL[] scrapeImageUrls(final Document currentPage) {
+        logger.info(String.format("[%s]: Processing [%s]", currentPage.title(), currentPage.baseUri()));
+        logger.debug(String.format("[%s]: Locating [%s] element containing images", currentPage.title(), COMIC_ELEMENT));
+        Elements comicElements = currentPage.getElementsByClass(COMIC_ELEMENT);
+        if (comicElements.size() != 1) {
+            String message = String.format("Was expecting 1 element but instead found %d", comicElements.size());
+            throw new UnexpectedWebsiteStructure(message);
+        }
+
+        Elements images = comicElements
+                .first()
+                .select(CSS_DIRECT_ANCHOR)
+                .select(CSS_DIRECT_IMG);
+        if (images.size() != 1) {
+            String message = String.format("Was expecting 1 image but instead found %d", images.size());
+            throw new UnexpectedWebsiteStructure(message);
+        }
+
+        logger.debug(String.format("[%s]: Constructing image URLs", currentPage.title()));
+        return images
+                .stream()
+                .map( s -> createUrl(s.absUrl(ATTR_SRC)))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toCollection(ArrayList::new))
+                .toArray(new URL[0]);
     }
 
     @Override
@@ -87,7 +122,7 @@ public class CadWebComicCrawler extends BaseWebComicCrawler {
             return null;
         }
 
-        String nextLink = nextLinks.first().attr(ATTR_HREF);
+        String nextLink = nextLinks.first().absUrl(ATTR_HREF);
         if (nextLink.trim().length() == 0) {
             String message = String.format("[%s]: Found next link element at [%s] but there was no href attribute.",
                     currentPage.title(), currentPage.baseUri());
@@ -96,45 +131,4 @@ public class CadWebComicCrawler extends BaseWebComicCrawler {
 
         return nextLink;
     }
-
-    @Override
-    final public URL[] scrapeImageUrls(final Document currentPage) {
-        logger.info(String.format("[%s]: Processing [%s]", currentPage.title(), currentPage.baseUri()));
-        logger.debug(String.format("[%s]: Locating [%s] element containing images", currentPage.title(), COMIC_ELEMENT));
-        Elements comicElements = currentPage.getElementsByClass(COMIC_ELEMENT);
-        if (comicElements.size() != 1) {
-            String message = String.format("Was expecting 1 element but instead found %d", comicElements.size());
-            throw new UnexpectedWebsiteStructure(message);
-        }
-
-        Elements images = comicElements
-                .first()
-                .select(CSS_DIRECT_ANCHOR)
-                .select(CSS_DIRECT_IMG);
-        if (images.size() != 1) {
-            String message = String.format("Was expecting 1 image but instead found %d", images.size());
-            throw new UnexpectedWebsiteStructure(message);
-        }
-
-        logger.debug(String.format("[%s]: Constructing image URLs", currentPage.title()));
-        return images
-                .stream()
-                .map( s -> createUrl(images.first().absUrl(ATTR_SRC)))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toCollection(ArrayList::new))
-                .toArray(new URL[0]);
-    }
-
-    @Override
-    public String buildFileName(final String imageName) {
-        int extensionDotIdx = imageName.lastIndexOf('.');
-        String currentPageTitle = history.get(history.size() - 1);
-        String updatedName = imageName.substring(0, extensionDotIdx) +
-                '-' +
-                currentPageTitle.substring(0, currentPageTitle.lastIndexOf('|')).trim() +
-                imageName.substring(extensionDotIdx);
-
-        return super.buildFileName(updatedName);
-    }
-
 }
