@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.URL;
 
 public interface WebComicCrawler {
     Logger logger = LoggerFactory.getLogger(WebComicCrawler.class);
@@ -15,8 +16,7 @@ public interface WebComicCrawler {
         Document document = Jsoup.connect(url).get();
         logger.debug(String.format("Retrieved %s successfully", url));
         return document;
-    };
+    }
 
-    String[] scrapeImageUrls(Document document);
-
+    URL[] scrapeImageUrls(Document document);
 }
