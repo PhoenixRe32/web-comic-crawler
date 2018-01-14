@@ -6,7 +6,6 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff:
-.idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/dictionaries
 
@@ -20,9 +19,6 @@
 .idea/**/uiDesigner.xml
 
 # Gradle:
-.idea/**/gradle.xml
-.idea/**/libraries
-
 # CMake
 cmake-build-debug/
 
@@ -457,3 +453,10 @@ __pycache__/
 
 
 # End of https://www.gitignore.io/api/java,linux,macos,windows,intellij,visualstudio,visualstudiocode
+/log4j-application.log.1
+/The Starcaster Chronicles/
+/The Console Wars/
+/The Campaign/
+/Analog and D-Pad/
+/Sillies/
+/Ctrl+Alt+Del/
