@@ -1,4 +1,4 @@
-package com.andreouconsulting.webcrawler.webcomic;
+package com.andreouconsulting.webcrawler.webcomic.crawlers;
 
 import com.sun.istack.internal.NotNull;
 
@@ -13,29 +13,37 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 abstract public class BaseWebComicCrawler {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseWebComicCrawler.class);
 
-    public static final String DIRECT_ANCHOR = ">a[href]";
-    public static final String DIRECT_IMG = ">img";
-    public static final String ATTR_SRC = "src";
-
-    private final String startUrl;
+    public final String startUrl;
     private final String saveLocation;
+    public final String comicTitle;
+    protected List<String> history;
 
     public BaseWebComicCrawler(@NotNull final String startUrl, @NotNull final String comicTitle) throws IOException {
         new URL(startUrl);
         this.startUrl = startUrl;
+
         createDirectory(comicTitle);
-        this.saveLocation = comicTitle;
+        saveLocation = comicTitle;
+        this.comicTitle = comicTitle;
+
+        history = new ArrayList<>();
     }
 
     public Document getPage(final String url) throws IOException {
-        logger.debug(String.format("Retrieving %s", url));
+        logger.info(String.format("Retrieving %s", url));
         Document document = Jsoup.connect(url).get();
         logger.debug(String.format("Retrieved %s successfully", url));
+
+        history.add(document.title());
         return document;
     }
 
@@ -48,9 +56,20 @@ abstract public class BaseWebComicCrawler {
         }
     }
 
+    final public int downloadImages(final URL[] imageUrls) {
+        logger.info(String.format("Downloading images: \n%s",
+                String.join("\n", Arrays.stream(imageUrls).map(URL::toString).collect(Collectors.toList()))));
+        int numberOfSuccesses = 0;
+        for (URL imageUrl : imageUrls) {
+            numberOfSuccesses = hasSavedImageToFile(imageUrl) ? numberOfSuccesses + 1 : numberOfSuccesses;
+        }
+        return numberOfSuccesses;
+    }
+
     public boolean hasSavedImageToFile(final URL imageUrl) {
         File image = new File(buildImageFilePath(imageUrl));
 
+        logger.debug(String.format("Trying to download [%s]", image));
         try {
             URLConnection connection = imageUrl.openConnection();
             connection.setRequestProperty("User-Agent",
@@ -62,16 +81,21 @@ abstract public class BaseWebComicCrawler {
             logger.warn(message);
             return false;
         }
-        logger.debug(String.format("Saved [%s]", image));
+        logger.info(String.format("Saved [%s]", image));
         return true;
     }
 
     public String buildImageFilePath(final URL imageUrl) {
         String imageUrlString = imageUrl.toString();
         int lastSlash = imageUrlString.lastIndexOf('/');
-        String imageName = removeSpecialCharacters(imageUrlString.substring(lastSlash + 1));
 
-        return saveLocation + File.separator + imageName;
+        String fileName = buildFileName(imageUrlString.substring(lastSlash + 1));
+
+        return saveLocation + File.separator + fileName;
+    }
+
+    public String buildFileName(String name) {
+        return removeSpecialCharacters(name);
     }
 
     private static String removeSpecialCharacters(String name) {
@@ -90,5 +114,9 @@ abstract public class BaseWebComicCrawler {
         FileUtils.forceMkdir(dir);
     }
 
-    abstract public URL[] scrapeImageUrls(final Document document);
+    abstract public void crawl();
+
+    abstract public URL[] scrapeImageUrls(final Document currentPage);
+
+    abstract public String findNextLink(final Document currentPage);
 }

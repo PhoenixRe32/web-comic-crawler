@@ -1,6 +1,7 @@
 package com.andreouconsulting.webcrawler.webcomic
 
-import com.andreouconsulting.webcrawler.webcomic.exceptions.UnexpectedWebsiteStructure
+import com.andreouconsulting.webcrawler.webcomic.crawlers.CadWebComicCrawler
+import com.andreouconsulting.webcrawler.webcomic.crawlers.exceptions.UnexpectedWebsiteStructure
 import org.apache.commons.io.FileUtils
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -71,36 +72,41 @@ class CadWebComicCrawlerTest extends Specification {
         assert result.length == 0
     }
 
-    def 'should save images from valid urls and return correct number of images saved'() {
+    def 'should return the link to the next page'() {
         given:
-        def filename = "cert.png"
-        def imageUrl = Thread.currentThread().getContextClassLoader().getResource(filename).toURI().toURL()
+        def expectedLink = "http://cad-comic.com/comic/foiled-again/"
+        def testPageUri = Thread.currentThread().getContextClassLoader().getResource("cad.html").toURI()
+        Document document = Jsoup.parse(new File(testPageUri), null)
 
         when:
-        def numberOfSuccessfulSaves = webComicCrawler.downloadImages([imageUrl].toArray(new URL[0]))
+        def result = webComicCrawler.findNextLink(document)
 
         then:
-        assert numberOfSuccessfulSaves == 1
-        assert (new File(comicTitle + File.separator + filename)).exists()
+        assert result == expectedLink
     }
 
-    def 'should return correct number of images saved (will force failure, expect 0)'() {
+    def 'should return null if there is not next link'() {
         given:
-        def filename = "cert.png"
-        def srcUrl = Thread.currentThread().getContextClassLoader().getResource(filename).toURI()
-
-        def srcFile = new File(srcUrl)
-        def destFile = new File(srcUrl.getPath() + ".copy")
-
-        FileUtils.copyFile(srcFile, destFile)
-        def destUrl = Thread.currentThread().getContextClassLoader().getResource(filename + ".copy").toURI().toURL()
-        FileUtils.forceDelete(destFile)
+        def testPageUri = Thread.currentThread().getContextClassLoader().getResource("cad-last.html").toURI()
+        Document document = Jsoup.parse(new File(testPageUri), null)
 
         when:
-        def numberOfSuccessfulSaves = webComicCrawler.downloadImages([destUrl].toArray(new URL[0]))
+        def result = webComicCrawler.findNextLink(document)
 
         then:
-        assert numberOfSuccessfulSaves == 0
-        assert !(new File(comicTitle + File.separator + "cert.png")).exists()
+        assert result == null
+    }
+
+    @SuppressWarnings("GroovyUnusedAssignment")
+    def 'should throw exception if there is next link but no href attribute'() {
+        given:
+        def testPageUri = Thread.currentThread().getContextClassLoader().getResource("cad-invalid.html").toURI()
+        Document document = Jsoup.parse(new File(testPageUri), null)
+
+        when:
+        webComicCrawler.findNextLink(document)
+
+        then:
+        UnexpectedWebsiteStructure e = thrown()
     }
 }

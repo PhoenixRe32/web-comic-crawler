@@ -1,6 +1,10 @@
 package com.andreouconsulting.webcrawler.webcomic
 
+import com.andreouconsulting.webcrawler.webcomic.crawlers.BaseWebComicCrawler
+import com.andreouconsulting.webcrawler.webcomic.crawlers.CadWebComicCrawler
 import org.apache.commons.io.FileUtils
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 import spock.lang.Specification
 
 class BaseWebComicCrawlerTest extends Specification {
@@ -44,7 +48,21 @@ class BaseWebComicCrawlerTest extends Specification {
         assert result == null
     }
 
-    def 'should save images from valid urls and return true'() {
+    @SuppressWarnings("GroovyUnusedAssignment")
+    def 'should throw exception when failed to get page'() {
+        given:
+        webComicCrawler = new CadWebComicCrawler(startUrl, comicTitle)
+        def testPageUri = Thread.currentThread().getContextClassLoader().getResource("cad.html").toURI()
+        Document expectedDocument = Jsoup.parse(new File(testPageUri), null)
+
+        when:
+        def document = webComicCrawler.getPage(testPageUri.toURL().toString())
+
+        then:
+        IOException e = thrown()
+    }
+
+    def 'should save image from url and return true'() {
         given:
         webComicCrawler = new CadWebComicCrawler(startUrl, comicTitle)
         def fileName = "cert.png"
@@ -58,7 +76,7 @@ class BaseWebComicCrawlerTest extends Specification {
         assert (new File(comicTitle + File.separator + fileName)).exists()
     }
 
-    def 'should not save images and return false'() {
+    def 'should not save image and return false'() {
         given:
         webComicCrawler = new CadWebComicCrawler(startUrl, comicTitle)
         def filename = "cert.png"
@@ -76,6 +94,41 @@ class BaseWebComicCrawlerTest extends Specification {
 
         then:
         assert !result
+        assert !(new File(comicTitle + File.separator + "cert.png")).exists()
+    }
+
+    def 'should save images from valid urls and return correct number of images saved'() {
+        given:
+        webComicCrawler = new CadWebComicCrawler(startUrl, comicTitle)
+        def filename = "cert.png"
+        def imageUrl = Thread.currentThread().getContextClassLoader().getResource(filename).toURI().toURL()
+
+        when:
+        def numberOfSuccessfulSaves = webComicCrawler.downloadImages([imageUrl].toArray(new URL[0]))
+
+        then:
+        assert numberOfSuccessfulSaves == 1
+        assert (new File(comicTitle + File.separator + filename)).exists()
+    }
+
+    def 'should return correct number of images saved (will force failure, expect 0)'() {
+        given:
+        webComicCrawler = new CadWebComicCrawler(startUrl, comicTitle)
+        def filename = "cert.png"
+        def srcUrl = Thread.currentThread().getContextClassLoader().getResource(filename).toURI()
+
+        def srcFile = new File(srcUrl)
+        def destFile = new File(srcUrl.getPath() + ".copy")
+
+        FileUtils.copyFile(srcFile, destFile)
+        def destUrl = Thread.currentThread().getContextClassLoader().getResource(filename + ".copy").toURI().toURL()
+        FileUtils.forceDelete(destFile)
+
+        when:
+        def numberOfSuccessfulSaves = webComicCrawler.downloadImages([destUrl].toArray(new URL[0]))
+
+        then:
+        assert numberOfSuccessfulSaves == 0
         assert !(new File(comicTitle + File.separator + "cert.png")).exists()
     }
 }
