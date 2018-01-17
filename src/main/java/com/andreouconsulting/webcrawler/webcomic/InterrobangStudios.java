@@ -13,6 +13,9 @@ public class InterrobangStudios {
 
         Map<String, String> cadCrawlers = new LinkedHashMap<>();
         cadCrawlers.put("It Sucks to be Weegie", "http://www.interrobangstudios.com/comics-display.php?strip_id=941");
+        cadCrawlers.put("Crisis of Infinite Sues", "http://www.interrobangstudios.com/comics-display.php?strip_id=989");
+        cadCrawlers.put("Trigger Star", "http://www.interrobangstudios.com/comics-display.php?strip_id=60");
+        cadCrawlers.put("The Dark Intruder", "http://www.interrobangstudios.com/comics-display.php?comic_id=1");
 
 
         for (Map.Entry<String, String> crawlerEntry : cadCrawlers.entrySet()) {
